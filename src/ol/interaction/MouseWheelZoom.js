@@ -23,8 +23,10 @@ import {clamp} from '../math.js';
  * @property {number} [duration=250] Animation duration in milliseconds.
  * @property {number} [timeout=80] Mouse wheel timeout duration in milliseconds.
  * @property {boolean} [useAnchor=true] Enable zooming using the mouse's
- * location as the anchor. When set to `false`, zooming in and out will zoom to
- * the center of the screen instead of zooming on the mouse's location.
+ * location or anchorCoordinate as the anchor. When set to `false`, zooming in and out will zoom to
+ * the center of the screen instead of zooming to an anchor.
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] The coordinate to zoom
+ * around if useAnchor is true. If this is not set, the mouse's coordinate is used as the anchor.
  * @property {boolean} [constrainResolution=false] If true, the mouse wheel zoom
  * event will always animate to the closest zoom level after an interaction;
  * false means intermediary zoom levels are allowed.
@@ -82,6 +84,12 @@ class MouseWheelZoom extends Interaction {
      */
     this.useAnchor_ =
       options.useAnchor !== undefined ? options.useAnchor : true;
+
+    /**
+     * @private
+     * @type {import("../coordinate.js").Coordinate|undefined}
+     */
+    this.anchorCoordinate_ = options.anchorCoordinate;
 
     /**
      * @private
@@ -188,7 +196,11 @@ class MouseWheelZoom extends Interaction {
     wheelEvent.preventDefault();
 
     if (this.useAnchor_) {
-      this.lastAnchor_ = mapBrowserEvent.coordinate;
+      if (this.anchorCoordinate_) {
+        this.lastAnchor_ = this.anchorCoordinate_;
+      } else {
+        this.lastAnchor_ = mapBrowserEvent.coordinate;
+      }
     }
 
     // Delta normalisation inspired by
@@ -293,6 +305,15 @@ class MouseWheelZoom extends Interaction {
     if (!useAnchor) {
       this.lastAnchor_ = null;
     }
+  }
+
+  /**
+   * If useAnchor is true, the interaction zooms around the given coordinate instead of the mouse position. Set to undefined to revert to using the mouse coordinate as anchor.
+   * @param {import("../coordinate.js").Coordinate|undefined} coordinate The coordinate to zoom around.
+   * @api
+   */
+  setAnchorCoordinate(coordinate) {
+    this.anchorCoordinate_ = coordinate;
   }
 }
 

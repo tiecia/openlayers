@@ -1,9 +1,20 @@
 import Map from '../src/ol/Map.js';
+import MouseWheelZoom from '../src/ol/interaction/MouseWheelZoom.js';
 import OSM from '../src/ol/source/OSM.js';
 import TileLayer from '../src/ol/layer/Tile.js';
 import View from '../src/ol/View.js';
+import {defaults} from '../src/ol/interaction/defaults.js';
+
+class CustomMouseWheelZoom extends MouseWheelZoom {
+  constructor() {
+    super({anchorCoordinate: [0, 0]});
+  }
+}
 
 const map = new Map({
+  interactions: defaults({
+    mouseWheelZoom: false,
+  }).extend([new CustomMouseWheelZoom()]),
   layers: [
     new TileLayer({
       source: new OSM(),

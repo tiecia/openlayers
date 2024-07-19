@@ -72,7 +72,7 @@ class DoubleClickZoom extends Interaction {
   }
 
   /**
-   * Sets the coordinate to zoom around. If undefined, the interaction will zoom around the 
+   * Sets the coordinate to zoom around. If undefined, the interaction will zoom around the
    * double-clicked coordinate.
    * @param {import("../coordinate.js").Coordinate|undefined} coordinate The coordinate to zoom around.
    * @api

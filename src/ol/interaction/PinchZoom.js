@@ -12,7 +12,6 @@ import {FALSE} from '../functions.js';
  * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate=undefined] Set this to zoom around
  * a specific coordinate instead of the centroid of the pinch. If set to undefined, the zoom is done around
  * the cendroid of the pinch.
-
  */
 
 /**
@@ -98,7 +97,7 @@ class PinchZoom extends PointerInteraction {
     }
 
     // scale anchor point.
-    if(this.anchorCoordinate_) {
+    if (this.anchorCoordinate_) {
       this.anchor_ = this.anchorCoordinate_;
     } else {
       this.anchor_ = map.getCoordinateFromPixelInternal(

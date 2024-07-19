@@ -121,7 +121,6 @@ const map = new Map({
   }),
 });
 
-
 function Update() {
   if (enabled.checked) {
     const latNum = parseFloat(lat.value);

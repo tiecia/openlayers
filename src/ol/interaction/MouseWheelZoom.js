@@ -308,7 +308,8 @@ class MouseWheelZoom extends Interaction {
   }
 
   /**
-   * If useAnchor is true, the interaction zooms around the given coordinate instead of the mouse position. Set to undefined to revert to using the mouse coordinate as anchor.
+   * If useAnchor is true, the interaction zooms around the given coordinate instead of the mouse position. 
+   * Set to undefined to revert to using the mouse coordinate as anchor.
    * @param {import("../coordinate.js").Coordinate|undefined} coordinate The coordinate to zoom around.
    * @api
    */

@@ -102,6 +102,15 @@ class KeyboardZoom extends Interaction {
     }
     return !stopEvent;
   }
+
+  /**
+   * Sets the coordinate to zoom around. If undefined, the interaction will zoom around the center of the map.
+   * @param {import("../coordinate.js").Coordinate|undefined} coordinate The coordinate to zoom around.
+   * @api
+  */
+  setAnchorCoordinate(coordinate) {
+    this.anchorCoordinate_ = coordinate;
+  }
 }
 
 export default KeyboardZoom;

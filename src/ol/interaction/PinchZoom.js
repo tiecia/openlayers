@@ -9,6 +9,10 @@ import {FALSE} from '../functions.js';
 /**
  * @typedef {Object} Options
  * @property {number} [duration=400] Animation duration in milliseconds.
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] Set this to zoom around
+ * a specific coordinate instead of the centroid of the pinch. If set to undefined, the zoom is done around
+ * the cendroid of the pinch.
+
  */
 
 /**
@@ -39,6 +43,12 @@ class PinchZoom extends PointerInteraction {
      * @type {import("../coordinate.js").Coordinate}
      */
     this.anchor_ = null;
+
+    /**
+     * @private
+     * @type {import("../coordinate.js").Coordinate|undefined}
+     */
+    this.anchorCoordinate_ = options.anchorCoordinate;
 
     /**
      * @private
@@ -88,9 +98,13 @@ class PinchZoom extends PointerInteraction {
     }
 
     // scale anchor point.
-    this.anchor_ = map.getCoordinateFromPixelInternal(
-      map.getEventPixel(centroidFromPointers(this.targetPointers)),
-    );
+    if(this.anchorCoordinate_) {
+      this.anchor_ = this.anchorCoordinate_;
+    } else {
+      this.anchor_ = map.getCoordinateFromPixelInternal(
+        map.getEventPixel(centroidFromPointers(this.targetPointers)),
+      );
+    }
 
     // scale, bypass the resolution constraint
     map.render();

@@ -12,6 +12,9 @@ import {disable} from '../rotationconstraint.js';
  * @property {number} [duration=250] The duration of the animation in
  * milliseconds.
  * @property {number} [threshold=0.3] Minimal angle in radians to start a rotation.
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] Set this to rotate around
+ * a specific coordinate instead of the centroid of the pinch. If set to undefined, the rotation is done around
+ * the cendroid of the pinch.
  */
 
 /**
@@ -42,6 +45,12 @@ class PinchRotate extends PointerInteraction {
      * @type {import("../coordinate.js").Coordinate}
      */
     this.anchor_ = null;
+
+    /**
+     * @private
+     * @type {import("../coordinate.js").Coordinate|undefined}
+     */
+    this.anchorCoordinate_ = options.anchorCoordinate;
 
     /**
      * @private
@@ -108,11 +117,15 @@ class PinchRotate extends PointerInteraction {
     }
 
     // rotate anchor point.
-    // FIXME: should be the intersection point between the lines:
-    //     touch0,touch1 and previousTouch0,previousTouch1
-    this.anchor_ = map.getCoordinateFromPixelInternal(
-      map.getEventPixel(centroidFromPointers(this.targetPointers)),
-    );
+    if (this.anchorCoordinate_) {
+      this.anchor = this.anchorCoordinate_;
+    } else {
+      // FIXME: should be the intersection point between the lines:
+      //     touch0,touch1 and previousTouch0,previousTouch1
+      this.anchor_ = map.getCoordinateFromPixelInternal(
+        map.getEventPixel(centroidFromPointers(this.targetPointers)),
+      );
+    }
 
     // rotate
     if (this.rotating_) {

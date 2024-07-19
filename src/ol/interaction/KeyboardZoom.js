@@ -66,6 +66,10 @@ class KeyboardZoom extends Interaction {
      */
     this.duration_ = options.duration !== undefined ? options.duration : 100;
 
+    /**
+     * @private
+     * @type {import("../coordinate.js").Coordinate|undefined}
+     */
     this.anchorCoordinate_ = options.anchorCoordinate;
   }
 

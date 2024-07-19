@@ -8,6 +8,8 @@ import MapBrowserEventType from '../MapBrowserEventType.js';
  * @typedef {Object} Options
  * @property {number} [duration=250] Animation duration in milliseconds.
  * @property {number} [delta=1] The zoom delta applied on each double click.
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate=undefined] The
+ * coordinate to zoom to. Zooms to the double-clicked location if not set.
  */
 
 /**
@@ -35,6 +37,12 @@ class DoubleClickZoom extends Interaction {
      * @type {number}
      */
     this.duration_ = options.duration !== undefined ? options.duration : 250;
+
+    /**
+     * @private
+     * @type {import("../coordinate.js").Coordinate|undefined}
+     */
+    this.anchorCoordinate_ = options.anchorCoordinate;
   }
 
   /**
@@ -51,7 +59,9 @@ class DoubleClickZoom extends Interaction {
         mapBrowserEvent.originalEvent
       );
       const map = mapBrowserEvent.map;
-      const anchor = mapBrowserEvent.coordinate;
+      const anchor = this.anchorCoordinate_
+        ? this.anchorCoordinate_
+        : mapBrowserEvent.coordinate;
       const delta = browserEvent.shiftKey ? -this.delta_ : this.delta_;
       const view = map.getView();
       zoomByDelta(view, delta, anchor, this.duration_);

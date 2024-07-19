@@ -15,7 +15,7 @@ import {platformModifierKey, targetNotEditable} from '../events/condition.js';
  * the platform modifier key isn't pressed
  * (!{@link module:ol/events/condition.platformModifierKey}).
  * @property {number} [delta=1] The zoom level delta on each key press.
- * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] The coordinate to zoom
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate=undefined] The coordinate to zoom
  * around. The center of the screen is used if this is not set.
  */
 

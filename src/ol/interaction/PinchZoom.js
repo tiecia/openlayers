@@ -9,7 +9,7 @@ import {FALSE} from '../functions.js';
 /**
  * @typedef {Object} Options
  * @property {number} [duration=400] Animation duration in milliseconds.
- * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] Set this to zoom around
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate=undefined] Set this to zoom around
  * a specific coordinate instead of the centroid of the pinch. If set to undefined, the zoom is done around
  * the cendroid of the pinch.
 

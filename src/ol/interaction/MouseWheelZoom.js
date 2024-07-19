@@ -25,7 +25,7 @@ import {clamp} from '../math.js';
  * @property {boolean} [useAnchor=true] Enable zooming using the mouse's
  * location or anchorCoordinate as the anchor. When set to `false`, zooming in and out will zoom to
  * the center of the screen instead of zooming to an anchor.
- * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] The coordinate to zoom
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate=undefined] The coordinate to zoom
  * around if useAnchor is true. If this is not set, the mouse's coordinate is used as the anchor.
  * @property {boolean} [constrainResolution=false] If true, the mouse wheel zoom
  * event will always animate to the closest zoom level after an interaction;

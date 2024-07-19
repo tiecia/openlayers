@@ -12,7 +12,7 @@ import {disable} from '../rotationconstraint.js';
  * @property {number} [duration=250] The duration of the animation in
  * milliseconds.
  * @property {number} [threshold=0.3] Minimal angle in radians to start a rotation.
- * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate] Set this to rotate around
+ * @property {import("../coordinate.js").Coordinate|undefined} [anchorCoordinate=undefined] Set this to rotate around
  * a specific coordinate instead of the centroid of the pinch. If set to undefined, the rotation is done around
  * the cendroid of the pinch.
  */

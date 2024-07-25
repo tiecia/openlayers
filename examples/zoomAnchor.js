@@ -23,72 +23,22 @@ lat.value = '0';
 lon.value = '0';
 enabled.checked = true;
 
-const dot = new Feature({
+const point = new Feature({
   geometry: new Point(
     fromLonLat([parseFloat(lon.value), parseFloat(lat.value)]),
   ),
 });
 
-class CustomMouseWheelZoom extends MouseWheelZoom {
-  constructor() {
-    super({
-      anchorCoordinate: fromLonLat([
-        parseFloat(lon.value),
-        parseFloat(lat.value),
-      ]),
-    });
-  }
-}
+const initCoordinate = fromLonLat([
+  parseFloat(lon.value),
+  parseFloat(lat.value),
+]);
 
-class CustomKeyboardZoom extends KeyboardZoom {
-  constructor() {
-    super({
-      anchorCoordinate: fromLonLat([
-        parseFloat(lon.value),
-        parseFloat(lat.value),
-      ]),
-    });
-  }
-}
-
-class CustomDoubleClickZoom extends DoubleClickZoom {
-  constructor() {
-    super({
-      anchorCoordinate: fromLonLat([
-        parseFloat(lon.value),
-        parseFloat(lat.value),
-      ]),
-    });
-  }
-}
-
-class CustomPinchZoom extends PinchZoom {
-  constructor() {
-    super({
-      anchorCoordinate: fromLonLat([
-        parseFloat(lon.value),
-        parseFloat(lat.value),
-      ]),
-    });
-  }
-}
-
-class CustomPinchRotate extends PinchRotate {
-  constructor() {
-    super({
-      anchorCoordinate: fromLonLat([
-        parseFloat(lon.value),
-        parseFloat(lat.value),
-      ]),
-    });
-  }
-}
-
-const customMouseWheelZoom = new CustomMouseWheelZoom();
-const customKeyboardZoom = new CustomKeyboardZoom();
-const customDoubleClickZoom = new CustomDoubleClickZoom();
-const customPinchZoom = new CustomPinchZoom();
-const customPinchRotate = new CustomPinchRotate();
+const mouseWheelZoom = new MouseWheelZoom({anchorCoordinate: initCoordinate});
+const keyboardZoom = new KeyboardZoom({anchorCoordinate: initCoordinate});
+const doubleClickZoom = new DoubleClickZoom({anchorCoordinate: initCoordinate});
+const pinchZoom = new PinchZoom({anchorCoordinate: initCoordinate});
+const pinchRotate = new PinchRotate({anchorCoordinate: initCoordinate});
 
 const map = new Map({
   interactions: defaults({
@@ -98,11 +48,11 @@ const map = new Map({
     pinchZoom: false,
     pinchRotate: false,
   }).extend([
-    customMouseWheelZoom,
-    customKeyboardZoom,
-    customDoubleClickZoom,
-    customPinchZoom,
-    customPinchRotate,
+    mouseWheelZoom,
+    keyboardZoom,
+    doubleClickZoom,
+    pinchZoom,
+    pinchRotate,
   ]),
   layers: [
     new TileLayer({
@@ -110,7 +60,7 @@ const map = new Map({
     }),
     new VectorLayer({
       source: new VectorSource({
-        features: [dot],
+        features: [point],
       }),
     }),
   ],
@@ -126,26 +76,26 @@ function Update() {
     const latNum = parseFloat(lat.value);
     const lonNum = parseFloat(lon.value);
 
-    const geom = dot.getGeometry();
+    const geom = point.getGeometry();
     if (geom) {
       geom.setCoordinates(fromLonLat([lonNum, latNum]));
     } else {
-      dot.setGeometry(new Point(fromLonLat([lonNum, latNum])));
+      point.setGeometry(new Point(fromLonLat([lonNum, latNum])));
     }
 
-    customMouseWheelZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
-    customKeyboardZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
-    customDoubleClickZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
-    customPinchZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
-    customPinchRotate.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
+    mouseWheelZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
+    keyboardZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
+    doubleClickZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
+    pinchZoom.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
+    pinchRotate.setAnchorCoordinate(fromLonLat([lonNum, latNum]));
   } else {
-    dot.setGeometry(null);
+    point.setGeometry(null);
 
-    customMouseWheelZoom.setAnchorCoordinate(null);
-    customKeyboardZoom.setAnchorCoordinate(null);
-    customDoubleClickZoom.setAnchorCoordinate(null);
-    customPinchZoom.setAnchorCoordinate(null);
-    customPinchRotate.setAnchorCoordinate(null);
+    mouseWheelZoom.setAnchorCoordinate(null);
+    keyboardZoom.setAnchorCoordinate(null);
+    doubleClickZoom.setAnchorCoordinate(null);
+    pinchZoom.setAnchorCoordinate(null);
+    pinchRotate.setAnchorCoordinate(null);
   }
 }
 
